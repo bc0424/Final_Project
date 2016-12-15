@@ -1,329 +1,375 @@
-//variables for images
+//BEAUTY VIDEO WAS TAKEN FROM DOVE COMMERCIAL
+//^LINK: https://www.youtube.com/watch?v=7DdM-4siaQw&t=151s
 
-
+//value used to change the screen or display when mouse is pressed
 var value = 0;
+var count = 0;
+var soundcheck = false;
+
+//boolean variables for adding food to the basket
+var chocolatewilladd = false;
+var saladwilladd = false;
+var sushiwilladd = false;
+var parfaitwilladd = false;
+var cheetowilladd = false;
+var sodawilladd = false;
+var foodwilladd = false;
+
+//boolean variables for adding activities to the basket
+var yogawilladd = false;
+var gymwilladd = false;
+var eatwilladd = false;
+var tvwilladd = false;
+//counter to check for food option numbers
+var foodcounter = 0;
+var activitycounter = 0;
+var counter = 0;
+var soundcount = 0;
 
 function preload() {
- party = loadImage("photo/Party Clothes.jpg");
- gymclothes = loadImage("photo/Gym Clothes.jpg");
- lazy = loadImage("photo/Lazy Clothes.jpg");
  yoga = loadImage("photo/Yoga.png");
  tv = loadImage("photo/TV.png");
  gym = loadImage("photo/Gym.png");
  eat = loadImage("photo/Eat.png");
- cheesecake = loadImage("photo/Cheesecake.png");
+ chocolate = loadImage("photo/Chocolate.png");
  salad = loadImage("photo/Salad.png");
- acai = loadImage("photo/Acai Bowl.png");
- cheeto = loadImage("photo/Cheeto Puff.png");
+ sushi = loadImage("photo/Sushi.png");
+ cheeto = loadImage("photo/Cheeto_Puff.png");
  parfait = loadImage("photo/Parfait.png");
- milkshake = loadImage("photo/Milkshake.png");
- bananabody = loadImage("photo/Banana Shape.png");
- applebody = loadImage("photo/Apple Shape.png");
- pearbody = loadImage("photo/Pear Shape.png");
- hourglassbody = loadImage("photo/Hourglass Shape.png");
+ soda = loadImage("photo/Soda.png");
+ bananabody = loadImage("photo/Banana_Shape.png");
+ applebody = loadImage("photo/Apple_Shape.png");
+ pearbody = loadImage("photo/Pear_Shape.png");
+ hourglassbody = loadImage("photo/Hourglass_Shape.png");
+ bag = loadImage("photo/basket.png");
  font = loadFont("fonts/NexaRustScriptL.otf");
+ mont_font = loadFont('fonts/Montserrat-Bold.ttf');
+ guitar = loadSound('sound/guitarr.mp3');
 }
 
 function setup() {
  createCanvas(1900, 950);
-
+ //calling the classes for food, bodyshape, basket, activity, and video collage...
+ lifebag1 = new lifeBag();
+ bodychoice1 = new bodyChoice();
+ foodchoice1 = new foodChoice();
+ activitychoice1 = new activityChoice();
+ videogrid1 = new Videogrid();
+ //CALL ALL THE VIDEOS THAT WILL BE PLAYED IN THE COLLAGE AND PLAY THEM IN A LOOP SO THAT IT WILL NEVER PAUSE
+ cheetovid1 = createVideo('video/cheeto_1.mp4');
+ cheetovid1.loop();
+ cheetovid1.hide();
+ chocovid = createVideo('video/chocolate.mp4');
+ chocovid.loop();
+ chocovid.hide()
+ saladvid = createVideo('video/salad.mp4');
+ saladvid.loop();
+ saladvid.hide();
+ sushivid = createVideo('video/sushi.mp4');
+ sushivid.loop();
+ sushivid.hide();
+ sodavid = createVideo('video/soda.mp4');
+ sodavid.loop();
+ sodavid.hide();
+ parfaitvid = createVideo('video/parfait.mp4');
+ parfaitvid.loop();
+ parfaitvid.hide();
+ cookvid = createVideo('video/Cook.mp4');
+ cookvid.loop();
+ cookvid.hide();
+ gymvid = createVideo('video/Workout.mp4');
+ gymvid.loop();
+ gymvid.hide();
+ yogavid = createVideo('video/Yoga.mp4');
+ yogavid.loop();
+ yogavid.hide();
+ eatvid = createVideo('video/Eat.mp4');
+ eatvid.loop();
+ eatvid.hide();
+ spinvid = createVideo('video/Spin.mp4');
+ spinvid.loop();
+ spinvid.hide();
+ bingevid = createVideo('video/Binge.mp4');
+ bingevid.loop();
+ bingevid.hide();
+ beautyvid = createVideo('video/Beauty.mp4');
+ beautyvid.hide();
+ //FOR BACKGROUND SOUND
+ guitar.setVolume(0.1);
 }
+
 
 function draw() {
  background(196, 188, 255);
  ClickingChange();
-
 }
 
+//If any of the body types are clicked it will switch to the food option page
+//VALUE 1 IS THE FOOD OPTION PAGE
+function bodyClick() {
+ if ((mouseX >= 60) && (mouseX <= 360) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 550) && (mouseX <= 850) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 1050) && (mouseX <= 1350) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 1550) && (mouseX <= 1850) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ }
+}
+//When the mouse is pressed the entire screen will switch to a different 
+//page depending on where user clicks
+//THE FUNCTIONS CHECK THAT THE USER CLICKS THE RIGHT AREA
+function mousePressed() {
+ if (value === 0) {
+  //Starts off with body shape page
+  bodyClick();
+ } else if (value == 1) {
+  //Clicked once and will go to food page
+  foodClick();
+ } else if (value == 2) {
+  //Click three options for food, check the number of clicks for food, and switch to basket screen
+  foodBag();
+  pickClick();
+  foodcounter += 1;
+  foodcounterCheck();
+ } else if (value == 3) {
+  activityClick();
+ } else if (value == 4) {
+  activityBag();
+  pickClick2();
+  activitycounter += 1;
+  activitycounterCheck();
+
+ } else if (value == 5) {
+  guitar.play();
+
+ }
+}
+
+//Decides what is displayed at each value 
 function ClickingChange() {
- if (value === 0){
- bodyChoice();
+ if (value === 0) {
+  bodychoice1.display();
  }
 
  if (value == 1) {
-  foodChoice();
- } 
- 
- if (value == 2){
-  activityChoice();
- } 
- 
- if (value == 3){
-  fashionChoice();
- } 
-}
-
-function mousePressed() {
-
- //If any of the body types are clicked it will switch to the food option page
- if ((mouseX >= 60) && (mouseX <= 360) && (mouseY >= 180) && (mouseY <= 880) && (value === 0)) {
-  value = 1;
- } else if ((mouseX >= 550) && (mouseX <= 850) && (mouseY >= 180) && (mouseY <= 880) && (value === 0)) {
-  value = 1;
- } else if ((mouseX >= 1050) && (mouseX <= 1350) && (mouseY >= 180) && (mouseY <= 880) && (value === 0)) {
-  value = 1;
- } else if ((mouseX >= 1550) && (mouseX <= 1850) && (mouseY >= 180) && (mouseY <= 880) && (value === 0)) {
-  value = 1;
+  foodchoice1.display();
  }
 
- //If any of the food choices are picked it will switch to the activity page 
-//For the cheesecake
- if ((mouseX >= 60) && (mouseX <= 510) && (mouseY >= 170) && (mouseY <= 520) && (value === 1)) {
+ if (value == 2) {
+  foodBag();
+  pickAgain();
+ }
+ if (value == 3) {
+  activitychoice1.display();
+
+ }
+ if (value == 4) {
+  activityBag();
+  pickAgain();
+ }
+
+ if (value == 5) {
+
+  if ((count >= 0) && (count <= 10000)) {
+   Prevideo();
+   soundcheck = true;
+  } else {
+   videogrid1.display();
+  }
+ }
+}
+
+//CREATE A BLACK SCREEN THAT WILL START OFF THE NARRATION FOR THE VIDEO COLLAGE
+function Prevideo() {
+ background(0);
+ textSize(50);
+ textFont(mont_font);
+ fill(255);
+ text("IS THIS WHAT A DAY WITH YOUR BODY TYPE WOULD BE LIKE?", 200, 500);
+ fill(0);
+ count += 100;
+}
+
+//CREATES A BUTTON THAT GOES BACK TO THE FOOD PAGE
+function pickAgain() {
+ push();
+ //Rectangle Button for Pressing Again
+ fill(255);
+ stroke(0);
+ strokeWeight(2);
+ rect(800, 60, 500, 150);
+ //Text inside the button that says:"PICK AGAIN?"
+ textSize(70);
+ textFont(font);
+ fill(0);
+ text("Pick Again", 900, 150);
+ pop();
+
+}
+
+//Function that checks that user only presses within the button
+function pickClick() {
+ if ((mouseX >= 800) && (mouseX <= 1300) && (mouseY >= 60) && (mouseY <= 210)) {
+  value = 1;
+ }
+}
+
+//Function that checks that user presses within the button and goes back to activity page
+function pickClick2() {
+ if ((mouseX >= 800) && (mouseX <= 1300) && (mouseY >= 60) && (mouseY <= 210)) {
+  value = 3;
+ }
+}
+
+function activitycounterCheck() {
+ //COUNTER TO CHECK THEY ONLY PICK TWO OPTIONS
+ if (activitycounter <= 2) {
+  activitywilladd = false;
+ } else {
+  activitywilladd = true;
+ }
+ if (activitywilladd === true) {
+  value = 5
+ }
+ if (activitycounter == 2) {
+  value = 5;
+ }
+}
+
+
+function foodcounterCheck() {
+ //COUNTER TO CHECK THEY ONLY PICK THREE OPTIONS
+ if (foodcounter <= 3) {
+  foodwilladd = false;
+ } else {
+  foodwilladd = true;
+ }
+ if (foodwilladd === true) {
   value = 2;
-  //For the salad
- } else if ((mouseX >= 630) && (mouseX <= 1030) && (mouseY >= 150) && (mouseY <= 500) && (value === 1)) {
+ }
+ if (foodcounter == 3) {
+  value = 3;
+ }
+}
+
+
+
+//Function checks that the user is only clicking on area occupied by body shape
+function bodyClick() {
+ if ((mouseX >= 60) && (mouseX <= 360) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 550) && (mouseX <= 850) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 1050) && (mouseX <= 1350) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ } else if ((mouseX >= 1550) && (mouseX <= 1850) && (mouseY >= 180) && (mouseY <= 880)) {
+  value = 1;
+ }
+}
+//function checks that user is only clicking on area occupied by food image
+function foodClick() {
+ //Chocolate
+ if ((mouseX >= 60) && (mouseX <= 510) && (mouseY >= 170) && (mouseY <= 520)) {
   value = 2;
+  chocolatewilladd = true;
+  //Salad
+ } else if ((mouseX >= 630) && (mouseX <= 1030) && (mouseY >= 150) && (mouseY <= 500)) {
+  value = 2;
+  saladwilladd = true;
   //Parfait
- } else if ((mouseX >= 1350) && (mouseX <= 1650) && (mouseY >= 100) && (mouseY <= 480) && (value === 1)) {
+ } else if ((mouseX >= 1350) && (mouseX <= 1650) && (mouseY >= 100) && (mouseY <= 480)) {
   value = 2;
+  parfaitwilladd = true;
   //Cheetos
- } else if ((mouseX >= 350) && (mouseX <= 750) && (mouseY >= 500) && (mouseY <= 880) && (value === 1)) {
+ } else if ((mouseX >= 350) && (mouseX <= 750) && (mouseY >= 500) && (mouseY <= 880)) {
   value = 2;
-  //Acai Bowl
- } else if ((mouseX >= 980) && (mouseX <= 1290) && (mouseY >= 400) && (mouseY <= 750) && (value === 1) ) {
+  cheetowilladd = true;
+  //Sushi
+ } else if ((mouseX >= 980) && (mouseX <= 1290) && (mouseY >= 400) && (mouseY <= 750)) {
   value = 2;
-  //Milkshake
- } else if ((mouseX >= 1550) && (mouseX <= 1750) && (mouseY >= 450) && (mouseY <= 820) && (value === 1) ) {
+  sushiwilladd = true;
+  //Soda
+ } else if ((mouseX >= 1550) && (mouseX <= 1750) && (mouseY >= 450) && (mouseY <= 820)) {
   value = 2;
- } 
+  sodawilladd = true;
 
- //If any of the activity choices are picked it will switch to fashion page
- if ((mouseX >= 490) && (mouseX <= 890) && (value == 2) && (mouseY >= 133) && (mouseY <= 480)) {
-  value = 3;
- } else if ((mouseX >= 1120) && (mouseX <= 1570) && (value == 2) && (mouseY >= 450) && (mouseY <= 750)) {
-  value = 3;
- } else if ((mouseX >= 1144) && (mouseX <= 1544) && (value == 2) && (mouseY >= 557) && (mouseY <= 907)) {
-  value = 3;
- } else if ((mouseX >= 500) && (mouseX <= 900) && (value == 2) && (mouseY >= 592) && (mouseY <= 918)) {
-  value = 3;
+ }
+}
+
+
+
+//Function checks that user only clicks on the area occupied by activity images
+function activityClick() {
+ //YOGA
+ if ((mouseX >= 490) && (mouseX <= 890) && (mouseY >= 133) && (mouseY <= 480)) {
+  value = 4;
+  yogawilladd = true;
+  //GYM
+ } else if ((mouseX >= 1120) && (mouseX <= 1570) && (mouseY >= 300) && (mouseY <= 650)) {
+  value = 4;
+  gymwilladd = true;
+  //WATCHING TV
+ } else if ((mouseX >= 1144) && (mouseX <= 1544) && (mouseY >= 557) && (mouseY <= 907)) {
+  value = 4;
+  tvwilladd = true;
+  //EATING
+ } else if ((mouseX >= 500) && (mouseX <= 900) && (mouseY >= 592) && (mouseY <= 918)) {
+  value = 4;
+  eatwilladd = true;
+ }
+}
+
+//Function that shows the basket with the activity objects that user has chosen
+function activityBag() {
+ //Pulling the food bag so we can keep the food user picked in the basket
+ foodBag();
+ //Yoga will be added to the basket
+ if (yogawilladd === true) {
+  lifebag1.addyoga();
+ }
+ //Gym will be added to the basket
+ if (gymwilladd === true) {
+  lifebag1.addgym();
+ }
+ if (eatwilladd === true) {
+  lifebag1.addeat();
+ }
+ if (tvwilladd === true) {
+  lifebag1.addtv();
  }
 }
 
 
 
-function fashionChoice() {
- gymcx = 400;
- gymcy = 600;
- partyx = 900;
- partyy = 600;
- lazyx = 1500;
- lazyy = 600;
- image(gymclothes, gymcx - (gymclothes.width / 2), gymcy - (gymclothes.height / 2), 400, 350);
- image(party, partyx - (party.width / 2), partyy - (party.height / 2), 400, 350);
- image(lazy, lazyx - (lazy.width / 2), lazy - (lazy.height / 2), 400, 350);
-}
+//Function that shows the basket with the objects that user has chosen (Uses boolean variables to add images)
 
+function foodBag() {
 
-function activityChoice() {
- yogax = 800;
- yogay = 400;
- gymx = 1300;
- gymy = 350;
- eatx = 1000;
- eaty = 900;
- tvx = 1300;
- tvy = 700;
- sizeyx = 450;
- sizeyy = 400;
- sizegx = 750;
- sizegy = 400;
- sizeex = 500;
- sizeey = 350;
- sizetx = 550;
- sizety = 400;
- textSize(50);
- text("What type of activities do you think this body type does?", 800, 100);
- if ((mouseX >= 490) && (mouseX <= 890) && (value == 2) && (mouseY >= 133) && (mouseY <= 480)) {
-  sizeyx += 100;
-  sizeyy += 100;
-  yogax -= 50;
-  yogay -= 50;
-  image(yoga, yogax - (yoga.width / 2), yogay - (yoga.height / 2), sizeyx, sizeyy);
- } else {
-  image(yoga, yogax - (yoga.width / 2), yogay - (yoga.height / 2), sizeyx, sizeyy);
- }
- if ((mouseX >= 1120) && (mouseX <= 1570) && (value == 2) && (mouseY >= 450) && (mouseY <= 750)) {
-  sizegx += 100;
-  sizegy += 100;
-  gymx -= 50;
-  gymy -= 50;
-  image(gym, gymx - (gym.width / 2), gymy - (gym.height / 2), sizegx, sizegy);
- } else {
-  image(gym, gymx - (gym.width / 2), gymy - (gym.height / 2), sizegx, sizegy);
- }
- if ((mouseX >= 500) && (mouseX <= 900) && (value == 2) && (mouseY >= 592) && (mouseY <= 918)) {
-  sizeex += 100;
-  sizeey += 100;
-  eatx -= 50;
-  eaty -= 50;
-  image(eat, eatx - (eat.width / 2), eaty - (eat.height / 2), sizeex, sizeey);
- } else {
-  image(eat, eatx - (eat.width / 2), eaty - (eat.height / 2), sizeex, sizeey);
- }
- if ((mouseX >= 1144) && (mouseX <= 1544) && (value == 2) && (mouseY >= 557) && (mouseY <= 907)) {
-  sizetx += 100;
-  sizety += 100;
-  tvx -= 50;
-  tvy -= 50;
-  image(tv, tvx - (tv.width / 2), tvy - (tv.height / 2), sizetx, sizety);
- } else {
-  image(tv, tvx - (tv.width / 2), tvy - (tv.height / 2), sizetx, sizety);
- }
-}
+ lifebag1.display();
 
-function foodChoice() {
- cheesecakex = 600;
- cheesecakey = 500;
- saladx = 1300;
- salady = 600;
- acaix = 1300;
- acaiy = 650;
- cheetox = 600;
- cheetoy = 750;
- parfaitx = 1600;
- parfaity = 350;
- milkshakex = 1650;
- milkshakey = 650;
- sizex = 350;
- sizey = 300;
- sizesx = 350;
- sizesy = 300;
- sizeax = 300;
- sizeay = 250;
- sizepx = 250;
- sizepy = 250;
- sizecx = 250;
- sizecy = 300;
- sizemx = 350;
- sizemy = 300;
- textSize(50);
- textFont(font);
- text("What types of food do you think this body type eats?", 300, 100);
- //enlarges cheesecake when hovered over
- if ((mouseX >= 205) && (mouseX <= 385) && (value == 1) && (mouseY >= 223) && (mouseY <= 403)) {
-  sizex += 100;
-  sizey += 100;
-  cheesecakex -= 50;
-  cheesecakey -= 50;
-  image(cheesecake, cheesecakex - (cheesecake.width / 2), cheesecakey - (cheesecake.height / 2), sizex, sizey);
- } else {
-  image(cheesecake, cheesecakex - (cheesecake.width / 2), cheesecakey - (cheesecake.height / 2), sizex, sizey);
+ if (chocolatewilladd === true) {
+  lifebag1.addchocolate();
  }
 
- //enlarges salad when hovered over
- if ((mouseX >= 710) && (mouseX <= 937) && (value == 1) && (mouseY >= 242) && (mouseY <= 447)) {
-  sizesx += 100;
-  sizesy += 100;
-  saladx -= 50;
-  salady -= 50;
-  image(salad, saladx - (salad.width / 2), salady - (salad.height / 2), sizesx, sizesy);
- } else {
-  image(salad, saladx - (salad.width / 2), salady - (salad.height / 2), sizesx, sizesy);
- }
- if ((mouseX >= 1023) && (mouseX <= 1243) && (value == 1) && (mouseY >= 435) && (mouseY <= 675)) {
-  sizeax += 100;
-  sizeay += 100;
-  acaix -= 50;
-  acaiy -= 50;
-  image(acai, acaix - (acai.width / 2), acaiy - (acai.height / 2), sizeax, sizeay);
- } else {
-  image(acai, acaix - (acai.width / 2), acaiy - (acai.height / 2), sizeax, sizeay);
- }
- if ((mouseX >= 1400) && (mouseX <= 1572) && (value == 1) && (mouseY >= 167) && (mouseY <= 414)) {
-  sizepx += 100;
-  sizepy += 100;
-  parfaitx -= 25;
-  parfaity -= 50;
-  image(parfait, parfaitx - (parfait.width / 2), parfaity - (parfait.height / 2), sizepx, sizepy);
- } else {
-  image(parfait, parfaitx - (parfait.width / 2), parfaity - (parfait.height / 2), sizepx, sizepy);
+ if (saladwilladd === true) {
+  lifebag1.addsalad();
  }
 
- if ((mouseX >= 448) && (mouseX <= 666) && (value == 1) && (mouseY >= 508) && (mouseY <= 808)) {
-  sizecx += 100;
-  sizecy += 100;
-  cheetox -= 50;
-  cheetoy -= 50;
-  image(cheeto, cheetox - (cheeto.width / 2), cheetoy - (cheeto.height / 2), sizecx, sizecy);
- } else {
-  image(cheeto, cheetox - (cheeto.width / 2), cheetoy - (cheeto.height / 2), sizecx, sizecy);
+ if (sushiwilladd === true) {
+  lifebag1.addsushi();
  }
 
- if ((mouseX >= 1600) && (mouseX <= 1702) && (value == 1) && (mouseY >= 452) && (mouseY <= 732)) {
-  sizemx += 100;
-  sizemy += 100;
-  milkshakex -= 50;
-  milkshakey -= 50;
-  image(milkshake, milkshakex - (milkshake.width / 2), milkshakey - (milkshake.height / 2), sizemx, sizemy);
- } else {
-  image(milkshake, milkshakex - (milkshake.width / 2), milkshakey - (milkshake.height / 2), sizemx, sizemy);
-
- }
-}
-
-//THE FIRST BODY CHOICE PAGE
-function bodyChoice() {
- bananax = 200;
- bananay = 500;
- applex = 700;
- appley = 500;
- pearx = 1200;
- peary = 540;
- hourglassx = 1700;
- hourglassy = 500;
- sizex = 0;
- sizey = 0;
- sizeax = 0;
- sizeay = 0;
- sizepx = 0;
- sizepy = 0;
- sizehx = 0;
- sizehy = 0;
- //Writing the header for the first page
- textSize(80);
- textFont(font);
- text("Pick a Body Type!", 800, 100);
-
- //Image of body shape enlarges when the mouse hovers on top of the image
- if ((mouseX >= 100) && (mouseX <= 300) && (value === 0) && (mouseY >= 250) && (mouseY <= 700)) {
-  sizex += 1200;
-  sizey += 900;
-  bananax -= 100;
-  bananay -= 50;
-  image(bananabody, bananax - (bananabody.width / 2), bananay - (bananabody.height / 2), sizex, sizey);
- } else {
-  image(bananabody, bananax - (bananabody.width / 2), bananay - (bananabody.height / 2), sizex, sizey);
+ if (parfaitwilladd === true) {
+  lifebag1.addparfait();
  }
 
- if ((mouseX >= 500) && (mouseX <= 800) && (value === 0) && (mouseY >= 250) && (mouseY <= 700)) {
-  sizeax += 1200;
-  sizeay += 900;
-  applex -= 100;
-  appley -= 50;
-  image(applebody, applex - (applebody.width / 2), appley - (applebody.height / 2), sizeax, sizeay);
- } else {
-  image(applebody, applex - (applebody.width / 2), appley - (applebody.height / 2), sizeax, sizeay);
+ if (cheetowilladd === true) {
+  lifebag1.addcheeto();
  }
- if ((mouseX >= 1000) && (mouseX <= 1400) && (value === 0) && (mouseY >= 250) && (mouseY <= 700)) {
-  sizepx += 1200;
-  sizepy += 900;
-  pearx -= 100;
-  peary -= 50;
-  image(pearbody, pearx - (pearbody.width / 2), peary - (pearbody.height / 2), sizepx, sizepy);
- } else {
-  image(pearbody, pearx - (pearbody.width / 2), peary - (pearbody.height / 2), sizepx, sizepy);
+ if (sodawilladd === true) {
+  lifebag1.addsoda();
  }
-
- if ((mouseX >= 1500) && (mouseX <= 2000) && (value === 0) && (mouseY >= 250) && (mouseY <= 700)) {
-  sizehx += 1200;
-  sizehy += 900;
-  hourglassx -= 100;
-  hourglassy -= 50;
-  image(hourglassbody, hourglassx - (hourglassbody.width / 2), hourglassy - (hourglassbody.height / 2), sizehx, sizehy);
- } else {
-  image(hourglassbody, hourglassx - (hourglassbody.width / 2), hourglassy - (hourglassbody.height / 2), sizehx, sizehy);
-
- }
-
 
 }
