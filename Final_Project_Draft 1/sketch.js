@@ -2,7 +2,7 @@
 //^LINK: https://www.youtube.com/watch?v=7DdM-4siaQw&t=151s
 
 //value used to change the screen or display when mouse is pressed
-var value = 0;
+var value = -1;
 var count = 0;
 var soundcheck = false;
 
@@ -121,8 +121,11 @@ function bodyClick() {
 //page depending on where user clicks
 //THE FUNCTIONS CHECK THAT THE USER CLICKS THE RIGHT AREA
 function mousePressed() {
+ if (value == -1) {
+  startClick();
+ }
  if (value === 0) {
-  //Starts off with body shape page
+  //Clicked once and will go to body shape page
   bodyClick();
  } else if (value == 1) {
   //Clicked once and will go to food page
@@ -141,7 +144,9 @@ function mousePressed() {
   activitycounter += 1;
   activitycounterCheck();
 
+
  } else if (value == 5) {
+  //MUST CLICK MOUSE TO PLAY MUSIC
   guitar.play();
 
  }
@@ -149,6 +154,9 @@ function mousePressed() {
 
 //Decides what is displayed at each value 
 function ClickingChange() {
+ if (value == -1) {
+  startPage();
+ }
  if (value === 0) {
   bodychoice1.display();
  }
@@ -177,9 +185,33 @@ function ClickingChange() {
    soundcheck = true;
   } else {
    videogrid1.display();
+
   }
  }
 }
+
+
+function startClick() {
+ if ((mouseX >= 700) && (mouseX <= 1200) && (mouseY >= 550) && (mouseY <= 700)) {
+  value = 0;
+ }
+}
+//FUNCTION THAT CREATES NEW SCREEN TO START
+function startPage() {
+ background(196, 188, 255);
+ textSize(120);
+ textFont(font);
+ text("Find the Beauty in You", 450, 300);
+ fill(255);
+ stroke(0);
+ strokeWeight(2);
+ rect(700, 550, 500, 150);
+ textSize(70);
+ textFont(font);
+ fill(0);
+ text("START", 850, 650);
+}
+
 
 //CREATE A BLACK SCREEN THAT WILL START OFF THE NARRATION FOR THE VIDEO COLLAGE
 function Prevideo() {
